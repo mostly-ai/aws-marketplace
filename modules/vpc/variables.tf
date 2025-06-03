@@ -10,7 +10,10 @@ variable "service" {
   type    = string
   default = "vpc"
 }
-variable "vpc_cidr" { type = string }
+variable "vpc_cidr" {
+  type    = string
+  default = null
+}
 variable "enable_nat_gateway" {
   type    = bool
   default = false

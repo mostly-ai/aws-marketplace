@@ -1,25 +1,27 @@
-data "aws_iam_policy_document" "main" {
-  for_each = var.s3_buckets
+locals {
+  bucket_arn_list = flatten(
+    [for bucket, configuration in var.s3_buckets : [
+      aws_s3_bucket.main[bucket].arn, "${aws_s3_bucket.main[bucket].arn}/*"
+    ]]
+  )
+}
 
+data "aws_iam_policy_document" "main" {
   statement {
     effect = "Allow"
     actions = [
       "s3:*"
     ]
-    resources = [
-      aws_s3_bucket.main[each.key].arn,
-    ]
+    resources = local.bucket_arn_list
   }
 }
 
 resource "aws_iam_policy" "main" {
-  for_each    = var.s3_buckets
-  name        = "${var.global.environment}-${var.service}-${each.key}"
+  name        = "${var.global.environment}-${var.service}"
   path        = "/"
-  description = "Access Policy for ${var.global.environment}-${var.service}-${each.key} bucket"
-  policy      = data.aws_iam_policy_document.main[each.key].json
+  description = "Access Policy for ${var.global.environment}-${var.service} buckets"
+  policy      = data.aws_iam_policy_document.main.json
   tags = {
-    "ConfigLocation" : "mostly-ai/aws-marketplace/configuration/${var.service}"
     "Environment" : var.global.environment
     "ManagedBy" : "Terraform"
     "ModuleLocation" : "mostly-ai/aws-marketplace/modules/s3-bucket",

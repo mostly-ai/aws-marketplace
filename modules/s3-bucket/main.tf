@@ -13,8 +13,7 @@ terraform {
 }
 
 provider "aws" {
-  access_key          = var.global_secret.aws_access_key
-  secret_key          = var.global_secret.aws_secret_key
-  region              = var.global.aws_region
-  allowed_account_ids = [var.global.aws_account_id]
+  access_key = var.global_secret.aws_access_key
+  secret_key = var.global_secret.aws_secret_key
+  region     = var.global.aws_region
 }

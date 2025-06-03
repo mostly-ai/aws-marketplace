@@ -11,9 +11,9 @@ module "eks" {
 
   create_node_security_group               = false
   enable_cluster_creator_admin_permissions = true
-  vpc_id                                   = data.aws_vpc.main.id
-  subnet_ids                               = concat(data.aws_subnets.private.ids, var.eks_enable_public_subnets ? data.aws_subnets.public.ids : [])
-  control_plane_subnet_ids                 = concat(data.aws_subnets.private.ids, var.eks_enable_public_subnets ? data.aws_subnets.public.ids : [])
+  vpc_id                                   = var.vpc_id
+  subnet_ids                               = concat(var.private_subnet_ids, var.eks_enable_public_subnets ? var.public_subnet_ids : [])
+  control_plane_subnet_ids                 = concat(var.private_subnet_ids, var.eks_enable_public_subnets ? var.public_subnet_ids : [])
   enable_irsa                              = true
 
   cluster_addons = {
@@ -29,7 +29,7 @@ module "eks" {
     ami_type                   = "BOTTLEROCKET_x86_64"
     use_custom_launch_template = false
     create_security_group      = false
-    subnet_ids                 = var.eks_enable_public_subnets ? data.aws_subnets.public.ids : data.aws_subnets.private.ids
+    subnet_ids                 = var.eks_enable_public_subnets ? var.public_subnet_ids : var.private_subnet_ids
     use_name_prefix            = true
 
     capacity_type              = "ON_DEMAND"
@@ -49,14 +49,13 @@ module "eks" {
         use_custom_launch_template            = true
         attach_cluster_primary_security_group = true
         disk_size                             = 24
-        subnet_ids                            = var.eks_enable_public_subnets ? data.aws_subnets.public.ids : data.aws_subnets.private.ids
+        subnet_ids                            = var.eks_enable_public_subnets ? var.public_subnet_ids : var.private_subnet_ids
         iam_role_name                         = "${var.global.environment}-general-nodes"
         iam_role_description                  = "IAM Role for MostlyAI EKS General Nodes"
         iam_role_additional_policies = {
           AWSWAFReadOnlyAccess                = "arn:aws:iam::aws:policy/AWSWAFReadOnlyAccess",
           AWSCertificateManagerReadOnly       = "arn:aws:iam::aws:policy/AWSCertificateManagerReadOnly",
           AWSMarketplaceMeteringRegisterUsage = "arn:aws:iam::aws:policy/AWSMarketplaceMeteringRegisterUsage",
-          MostlyAIS3BucketAccess              = "arn:aws:iam::${var.global.aws_account_id}:policy/${var.mostly_s3_bucket_access_policy_name}"
         }
         # * Note that after creation - desired size must be kept up-to-date manually
         # https://github.com/terraform-aws-modules/terraform-aws-eks/blob/master/docs/faq.md#why-are-there-no-changes-when-a-node-groups-desired_size-is-modified
@@ -69,12 +68,9 @@ module "eks" {
         use_custom_launch_template            = true
         attach_cluster_primary_security_group = true
         disk_size                             = 24
-        subnet_ids                            = var.eks_enable_public_subnets ? data.aws_subnets.public.ids : data.aws_subnets.private.ids
+        subnet_ids                            = var.eks_enable_public_subnets ? var.public_subnet_ids : var.private_subnet_ids
         iam_role_name                         = "${var.global.environment}-cpu-compute-nodes"
         iam_role_description                  = "IAM Role for MostlyAI EKS CPU-Compute Nodes"
-        iam_role_additional_policies = {
-          MostlyAIS3BucketAccess = "arn:aws:iam::${var.global.aws_account_id}:policy/${var.mostly_s3_bucket_access_policy_name}"
-        }
         # * Note that after creation - desired size must be kept up-to-date manually
         # https://github.com/terraform-aws-modules/terraform-aws-eks/blob/master/docs/faq.md#why-are-there-no-changes-when-a-node-groups-desired_size-is-modified
         min_size = 0
@@ -93,12 +89,9 @@ module "eks" {
         use_custom_launch_template            = true
         attach_cluster_primary_security_group = true
         disk_size                             = 24
-        subnet_ids                            = var.eks_enable_public_subnets ? data.aws_subnets.public.ids : data.aws_subnets.private.ids
+        subnet_ids                            = var.eks_enable_public_subnets ? var.public_subnet_ids : var.private_subnet_ids
         iam_role_name                         = "${var.global.environment}-gpu-compute-nodes"
         iam_role_description                  = "IAM Role for MostlyAI EKS GPU-Compute Nodes"
-        iam_role_additional_policies = {
-          MostlyAIS3BucketAccess = "arn:aws:iam::${var.global.aws_account_id}:policy/${var.mostly_s3_bucket_access_policy_name}"
-        }
         # * Note that after creation - desired size must be kept up-to-date manually
         # https://github.com/terraform-aws-modules/terraform-aws-eks/blob/master/docs/faq.md#why-are-there-no-changes-when-a-node-groups-desired_size-is-modified
         min_size = 0
@@ -115,7 +108,6 @@ module "eks" {
   )
 
   tags = {
-    "ConfigLocation" : "mostly-ai/aws-marketplace/configuration/${var.service}"
     "Environment" : var.global.environment
     "ManagedBy" : "Terraform"
     "ModuleLocation" : "mostly-ai/aws-marketplace/modules/eks"

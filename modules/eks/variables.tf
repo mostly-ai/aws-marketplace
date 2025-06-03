@@ -10,15 +10,14 @@ variable "service" {
   type    = string
   default = "eks"
 }
-variable "mostly_s3_bucket_access_policy_name" { type = string }
-variable "vpc_name" { type = string }
-variable "vpc_public_subnet_tags" {
-  type    = map(string)
-  default = {}
+variable "vpc_id" { type = string }
+variable "private_subnet_ids" {
+  type    = list(string)
+  default = []
 }
-variable "vpc_private_subnet_tags" {
-  type    = map(string)
-  default = {}
+variable "public_subnet_ids" {
+  type    = list(string)
+  default = []
 }
 variable "eks_kubernetes_version" {
   type    = string

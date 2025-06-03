@@ -3,7 +3,6 @@ resource "aws_s3_bucket" "main" {
   bucket        = "${var.global.environment}-${var.service}-${each.key}"
   force_destroy = each.value["force_destroy"]
   tags = {
-    "ConfigLocation" : "mostly-ai/aws-marketplace/configuration/${var.service}"
     "Environment" : var.global.environment
     "ManagedBy" : "Terraform"
     "ModuleLocation" : "mostly-ai/aws-marketplace/modules/s3-bucket",

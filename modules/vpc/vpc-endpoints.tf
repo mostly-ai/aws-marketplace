@@ -22,7 +22,6 @@ module "vpc-endpoints" {
   }
 
   tags = {
-    "ConfigLocation" : "mostly-ai/aws-marketplace/configuration/${var.service}"
     "Environment" : var.global.environment
     "ManagedBy" : "Terraform"
     "ModuleLocation" : "mostly-ai/aws-marketplace/modules/vpc",

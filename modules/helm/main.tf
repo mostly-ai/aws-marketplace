@@ -16,5 +16,9 @@ terraform {
   required_version = ">= 1.9.0"
 }
 
-provider "helm" {}
+provider "helm" {
+  kubernetes {
+    config_path = var.kubeconfig_path
+  }
+}
 provider "deepmerge" {}

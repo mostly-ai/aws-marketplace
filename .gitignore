@@ -39,3 +39,6 @@ terraform.rc
 values.yaml
 temp
 temp*
+
+.terragrunt-cache
+.terragrunt-stack

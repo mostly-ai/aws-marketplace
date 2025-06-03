@@ -9,6 +9,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "main" {
   rule {
     id     = "${each.key}-lifecycle-rule"
     status = title(each.value["lifecycle_status"])
+    filter {}
     expiration {
       days = each.value["lifecycle_expiration_days"]
     }
