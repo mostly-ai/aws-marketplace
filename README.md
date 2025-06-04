@@ -11,15 +11,16 @@ DocumentationOwner: mostlyai-devops
 [![AWS Marketplace Offering](https://img.shields.io/badge/AWS%20Marketplace%20Offering-text?style=flat-square&color=ff9900)](https://aws.amazon.com/marketplace/pp/prodview-clqfgzfzznfoc)
 
 - [MostlyAI Marketplace Installation Guide](#mostlyai-marketplace-installation-guide)
-  - [Tools and Extensions](#tools-and-extensions)
+  - [Tools](#tools)
   - [Basic Overview](#basic-overview)
   - [Installation Requirements](#installation-requirements)
   - [Getting Started](#getting-started)
 
 ## Tools
+
 - **Required:**
-  - `opentofu`: OSS fork of Terraform, used to manage the infrastructure as code. ([Source](https://github.com/opentofu/opentofu), [Install](https://opentofu.org/docs/intro/install/) &  [Documentation](https://opentofu.org/docs/))
-  - `terragrunt`: OpenTofu wrapper for configuration management. ([Source](https://github.com/gruntwork-io/terragrunt),  [Install](https://terragrunt.gruntwork.io/docs/getting-started/install/) & [Documentation](https://terragrunt.gruntwork.io/docs/))
+  - `opentofu`: OSS fork of Terraform, used to manage the infrastructure as code. ([Source](https://github.com/opentofu/opentofu), [Install](https://opentofu.org/docs/intro/install/) & [Documentation](https://opentofu.org/docs/))
+  - `terragrunt`: OpenTofu wrapper for configuration management. ([Source](https://github.com/gruntwork-io/terragrunt), [Install](https://terragrunt.gruntwork.io/docs/getting-started/install/) & [Documentation](https://terragrunt.gruntwork.io/docs/))
 - **Recommended:**
   - `devbox`: A tool to prepare your development environment for working with this repository. ([Source/Install](https://github.com/jetify-com/devbox) & [Documentation](https://www.jetify.com/docs/devbox/))
 
