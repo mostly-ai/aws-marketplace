@@ -3,6 +3,10 @@ variable "service" {
   type    = string
   default = "mostlyai"
 }
+variable "namespace" {
+  type    = string
+  default = "mostlyai"
+}
 variable "kubeconfig_path" {
   type    = string
   default = "~/.kube/config"
@@ -14,6 +18,10 @@ variable "helm_release_repository" {
 variable "helm_release_version" {
   type    = string
   default = "4.7.0"
+}
+variable "helm_release_chart" {
+  type    = string
+  default = "mostly-combined"
 }
 variable "helm_release_values" {
   type    = map(any)

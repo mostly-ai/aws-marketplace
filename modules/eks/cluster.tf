@@ -17,8 +17,9 @@ module "eks" {
   enable_irsa                              = true
 
   cluster_addons = {
-    coredns    = { most_recent = true }
-    kube-proxy = { most_recent = true }
+    coredns            = { most_recent = true }
+    kube-proxy         = { most_recent = true }
+    aws-ebs-csi-driver = { most_recent = true }
     vpc-cni = {
       most_recent          = true
       configuration_values = jsonencode({ enableNetworkPolicy = "true" })
@@ -53,9 +54,9 @@ module "eks" {
         iam_role_name                         = "${var.global.environment}-general-nodes"
         iam_role_description                  = "IAM Role for MostlyAI EKS General Nodes"
         iam_role_additional_policies = {
-          AWSWAFReadOnlyAccess                = "arn:aws:iam::aws:policy/AWSWAFReadOnlyAccess",
-          AWSCertificateManagerReadOnly       = "arn:aws:iam::aws:policy/AWSCertificateManagerReadOnly",
           AWSMarketplaceMeteringRegisterUsage = "arn:aws:iam::aws:policy/AWSMarketplaceMeteringRegisterUsage",
+          AmazonEBSCSIDriverPolicy            = "arn:aws:iam::aws:policy/AmazonEBSCSIDriverPolicy",
+          ALBControllerIAMPolicy              = aws_iam_policy.main.arn
         }
         # * Note that after creation - desired size must be kept up-to-date manually
         # https://github.com/terraform-aws-modules/terraform-aws-eks/blob/master/docs/faq.md#why-are-there-no-changes-when-a-node-groups-desired_size-is-modified
