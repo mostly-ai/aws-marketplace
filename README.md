@@ -36,11 +36,20 @@ The repository also comes with terragrunt [examples](./examples), demonstrating 
 
 ## Installation Requirements
 
-MostlyAI Platform qequires the following infrastructure in place to be installed and operate correctly:
+MostlyAI Platform requires the following infrastructure in place to be installed and operate correctly:
 
 1. **Kubernetes Cluster** - the platform is distributed in a form of a helm-chart and only supports Kubernetes as a deployment target.
 2. **Fully-Qualified Domain Name (FQDN)** - FQDN is required when configuring the KeyCloak identity provider realm. It is also used in the ingress configuration.
 3. **TLS Certificate** - Secure Context is required for client -> platform communication starting KC26, hence the requirement for a TLS certificate.
+
+Additionally, the [examples](./examples) in this repository assume the use/deployment of the following:
+
+1. **AWS Load Balancer Controller** - used to manage AWS Load Balancers for the Kubernetes cluster. _Deployed as a separate helm-chart release_
+2. **AWS Certificate Manager (ACM)** - used to manage TLS certificates which are automatically provisioned to ALBs. _Deployed as a separate helm-chart release_
+3. **AWS EBS CSI Controller** - used to manage AWS EBS volumes for the Kubernetes cluster. _Deployed as an EKS add-on_
+4. **AWS S3** - acts as a storage backend for the MostlyAI Platform. Alternatively, the `mostly-combined` chart provides an option to deploy a MinIO instance in the Kubernetes cluster.
+5. **AWS Route53** - used to manage the FQDN dns record as well as the TLS certificate verification record.
+6. **AWS IAM Policies && IAM Instance Roles** - additional IAM Policies are deployed along with the EKS cluster example to allow AWS Controllers to operate. These policies are attached to the IAM Instance Roles. IRSA is not used for the sake of simplicity, but is recommended for production deployments.
 
 ## Getting Started
 
@@ -58,5 +67,7 @@ You will also need to have your AWS credentials available in the environment. Th
 export AWS_ACCESS_KEY_ID=your_access_key_id
 export AWS_SECRET_ACCESS_KEY=your_secret_access_key
 ```
+
+Finally, we assume that you have already purchased the Marketplace offering which will automatically provide you with the access to the helm chart and images stored in the AWS Marketplace ECR repository.
 
 With your environment set up, you can follow the instructions in the [examples](./examples) README to deploy the infrastructure or use the modules directly.
