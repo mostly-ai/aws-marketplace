@@ -21,6 +21,8 @@ DocumentationOwner: mostlyai-devops
 - **Required:**
   - `opentofu`: OSS fork of Terraform, used to manage the infrastructure as code. ([Source](https://github.com/opentofu/opentofu), [Install](https://opentofu.org/docs/intro/install/) & [Documentation](https://opentofu.org/docs/))
   - `terragrunt`: OpenTofu wrapper for configuration management. ([Source](https://github.com/gruntwork-io/terragrunt), [Install](https://terragrunt.gruntwork.io/docs/getting-started/install/) & [Documentation](https://terragrunt.gruntwork.io/docs/))
+  - `awscli`: Command-line interface for managing AWS services. ([Source](https://github.com/aws/aws-cli/tree/v2), [Install](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) & [Documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html))
+  - `kubectl`: Command-line tool for interacting with Kubernetes clusters. ([Source](https://github.com/kubernetes/kubectl), [Install](https://kubernetes.io/docs/tasks/tools/) & [Documentation](https://kubernetes.io/docs/reference/kubectl/))
 - **Recommended:**
   - `devbox`: A tool to prepare your development environment for working with this repository. ([Source/Install](https://github.com/jetify-com/devbox) & [Documentation](https://www.jetify.com/docs/devbox/))
 
