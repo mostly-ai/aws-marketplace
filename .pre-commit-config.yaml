@@ -26,5 +26,5 @@ repos:
         exclude: (.*/\.terragrunt-cache/.*)
         files: examples
       - id: terragrunt_validate
-        exclude: (^[^/]+/[^/]+/root\.hcl$)|(.*/\.terragrunt-cache/.*)|(^[^/]+/[^/]+/[^/]+/common\.hcl$)
+        exclude: (.*/\.terragrunt-cache/.*)|(.*/common\.hcl$)|(.*/common-secret\.hcl$)
         files: examples

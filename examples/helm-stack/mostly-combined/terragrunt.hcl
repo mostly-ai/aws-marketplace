@@ -22,17 +22,18 @@ inputs = {
   helm_release_repository = "https://709825985650.dkr.ecr.us-east-1.amazonaws.com/mostly-ai/platform"
   helm_release_values = {
     values = {
+      global = {
+        fqdn = local.global.installation_domain_name
+        image = {
+          mostlyRegistry = "709825985650.dkr.ecr.us-east-1.amazonaws.com/mostly-ai/platform"
+        }
+      },
       mostlyConfigurations = {
         configMap = {
           keys = {
             STORAGE_S3_MOSTLY_APP_BUCKET   = dependency.s3-bucket.outputs.bucket_name
             STORAGE_S3_MOSTLY_APP_ENDPOINT = "https://s3.${local.global.aws_region}.amazonaws.com"
           }
-        }
-      },
-      global = {
-        image = {
-          mostlyRegistry = "709825985650.dkr.ecr.us-east-1.amazonaws.com/mostly-ai/platform"
         }
       },
       mostlyApp = {
