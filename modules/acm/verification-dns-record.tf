@@ -14,5 +14,6 @@ resource "aws_route53_record" "main" {
   zone_id = data.aws_route53_zone.main.zone_id
   name    = each.value.name
   type    = each.value.type
-  records = each.value.record
+  records = [each.value.record]
+  ttl     = 3600
 }

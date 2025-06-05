@@ -23,6 +23,7 @@ DocumentationOwner: mostlyai-devops
   - `terragrunt`: OpenTofu wrapper for configuration management. ([Source](https://github.com/gruntwork-io/terragrunt), [Install](https://terragrunt.gruntwork.io/docs/getting-started/install/) & [Documentation](https://terragrunt.gruntwork.io/docs/))
   - `awscli`: Command-line interface for managing AWS services. ([Source](https://github.com/aws/aws-cli/tree/v2), [Install](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) & [Documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html))
   - `kubectl`: Command-line tool for interacting with Kubernetes clusters. ([Source](https://github.com/kubernetes/kubectl), [Install](https://kubernetes.io/docs/tasks/tools/) & [Documentation](https://kubernetes.io/docs/reference/kubectl/))
+  - `helm`: Package manager for Kubernetes ([Source](https://github.com/helm/helm), [Install](https://helm.sh/docs/intro/install/) & [Documentation](https://helm.sh/docs/))
 - **Recommended:**
   - `devbox`: A tool to prepare your development environment for working with this repository. ([Source/Install](https://github.com/jetify-com/devbox) & [Documentation](https://www.jetify.com/docs/devbox/))
 
@@ -63,11 +64,12 @@ devbox shell
 
 Otherwise, you can install the dependencies following the instructions in the **[Tools](#tools)** section above.
 
-You will also need to have your AWS credentials available in the environment. The examples read those directly from the environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+You will also need to have your AWS credentials available in the environment. The examples read those directly from the environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`. It would also be most convenient to set the `AWS_REGION` variable to the region where you want to deploy the infrastructure for the awscli interactions.
 
 ```bash
 export AWS_ACCESS_KEY_ID=your_access_key_id
 export AWS_SECRET_ACCESS_KEY=your_secret_access_key
+export AWS_REGION=your_aws_region
 ```
 
 Finally, we assume that you have already purchased the Marketplace offering which will automatically provide you with the access to the helm chart and images stored in the AWS Marketplace ECR repository.

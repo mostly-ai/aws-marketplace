@@ -55,13 +55,14 @@ module "eks" {
         iam_role_description                  = "IAM Role for MostlyAI EKS General Nodes"
         iam_role_additional_policies = {
           AWSMarketplaceMeteringRegisterUsage = "arn:aws:iam::aws:policy/AWSMarketplaceMeteringRegisterUsage",
-          AmazonEBSCSIDriverPolicy            = "arn:aws:iam::aws:policy/AmazonEBSCSIDriverPolicy",
+          AmazonEBSCSIDriverPolicy            = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
           ALBControllerIAMPolicy              = aws_iam_policy.main.arn
         }
         # * Note that after creation - desired size must be kept up-to-date manually
         # https://github.com/terraform-aws-modules/terraform-aws-eks/blob/master/docs/faq.md#why-are-there-no-changes-when-a-node-groups-desired_size-is-modified
-        min_size = 0
-        max_size = var.eks_general_node_group_max_size
+        min_size     = var.eks_general_node_group_min_size
+        desired_size = var.eks_general_node_group_desired_size
+        max_size     = var.eks_general_node_group_max_size
       },
       "cpu-compute-nodes" = {
         name                                  = "${var.global.environment}-${var.service}-cpu-compute-nodes"
@@ -74,8 +75,9 @@ module "eks" {
         iam_role_description                  = "IAM Role for MostlyAI EKS CPU-Compute Nodes"
         # * Note that after creation - desired size must be kept up-to-date manually
         # https://github.com/terraform-aws-modules/terraform-aws-eks/blob/master/docs/faq.md#why-are-there-no-changes-when-a-node-groups-desired_size-is-modified
-        min_size = 0
-        max_size = var.eks_cpu_compute_node_group_max_size
+        min_size     = var.eks_cpu_compute_node_group_min_size
+        desired_size = var.eks_cpu_compute_node_group_desired_size
+        max_size     = var.eks_cpu_compute_node_group_max_size
         taints = [
           {
             key    = "scheduling.mostly.ai/node"
@@ -84,6 +86,8 @@ module "eks" {
           }
         ]
       },
+    },
+    var.eks_gpu_compute_node_group_enabled ? {
       "gpu-compute-nodes" = {
         name                                  = "${var.global.environment}-${var.service}-gpu-compute-nodes"
         instance_types                        = var.eks_gpu_compute_node_group_instance_types
@@ -95,8 +99,9 @@ module "eks" {
         iam_role_description                  = "IAM Role for MostlyAI EKS GPU-Compute Nodes"
         # * Note that after creation - desired size must be kept up-to-date manually
         # https://github.com/terraform-aws-modules/terraform-aws-eks/blob/master/docs/faq.md#why-are-there-no-changes-when-a-node-groups-desired_size-is-modified
-        min_size = 0
-        max_size = var.eks_gpu_compute_node_group_max_size
+        min_size     = var.eks_gpu_compute_node_group_min_size
+        desired_size = var.eks_gpu_compute_node_group_desired_size
+        max_size     = var.eks_gpu_compute_node_group_max_size
         taints = [
           {
             key    = "scheduling.mostly.ai/node"
@@ -105,7 +110,7 @@ module "eks" {
           }
         ]
       }
-    },
+    } : {}
   )
 
   tags = {

@@ -1,4 +1,4 @@
-output "values_file" {
-  value     = local_sensitive_file.main.content
+output "values" {
+  value     = local.values
   sensitive = true
 }

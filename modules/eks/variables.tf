@@ -33,6 +33,14 @@ variable "eks_general_node_group_instance_types" {
   type    = list(string)
   default = ["m5a.xlarge"]
 }
+variable "eks_general_node_group_min_size" {
+  type    = number
+  default = 0
+}
+variable "eks_general_node_group_desired_size" {
+  type    = number
+  default = 2
+}
 variable "eks_general_node_group_max_size" {
   type    = number
   default = 4
@@ -41,13 +49,33 @@ variable "eks_cpu_compute_node_group_instance_types" {
   type    = list(string)
   default = ["c5.4xlarge"]
 }
+variable "eks_cpu_compute_node_group_min_size" {
+  type    = number
+  default = 0
+}
+variable "eks_cpu_compute_node_group_desired_size" {
+  type    = number
+  default = 1
+}
 variable "eks_cpu_compute_node_group_max_size" {
   type    = number
   default = 4
 }
+variable "eks_gpu_compute_node_group_enabled" {
+  type    = bool
+  default = false
+}
 variable "eks_gpu_compute_node_group_instance_types" {
   type    = list(string)
   default = ["g5.2xlarge"]
+}
+variable "eks_gpu_compute_node_group_min_size" {
+  type    = number
+  default = 0
+}
+variable "eks_gpu_compute_node_group_desired_size" {
+  type    = number
+  default = 1
 }
 variable "eks_gpu_compute_node_group_max_size" {
   type    = number

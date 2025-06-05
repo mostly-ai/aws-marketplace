@@ -5,6 +5,7 @@
     "opentofu@latest",
     "terragrunt@latest",
     "awscli2@latest",
-    "kubectl@latest"
+    "kubectl@latest",
+    "kubernetes-helm@latest"
   ]
 }

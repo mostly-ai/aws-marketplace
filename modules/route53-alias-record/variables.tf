@@ -8,8 +8,4 @@ variable "global_secret" {
 # Module-specific variables
 variable "hosted_zone" { type = string }
 variable "record_name" { type = string }
-variable "record_value" { type = any }
-variable "record_type" {
-  type    = string
-  default = "A"
-}
+variable "record_value" { type = string }

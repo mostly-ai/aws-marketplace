@@ -10,5 +10,5 @@ locals {
 inputs = {
   global        = local.global
   global_secret = local.global_secret
-  vpc_cidr      = "10.0.0.0/16"
+  vpc_cidr      = "10.52.0.0/16"
 }

@@ -17,9 +17,13 @@ locals {
 }
 
 inputs = {
-  global             = local.global
-  global_secret      = local.global_secret
-  vpc_id             = dependency.vpc.outputs.vpc_id
-  private_subnet_ids = dependency.vpc.outputs.private_subnet_ids
-  public_subnet_ids  = dependency.vpc.outputs.public_subnet_ids
+  global                                  = local.global
+  global_secret                           = local.global_secret
+  vpc_id                                  = dependency.vpc.outputs.vpc_id
+  private_subnet_ids                      = dependency.vpc.outputs.private_subnet_ids
+  public_subnet_ids                       = dependency.vpc.outputs.public_subnet_ids
+  eks_gpu_compute_node_group_enabled      = false
+  eks_general_node_group_desired_size     = 2
+  eks_cpu_compute_node_group_desired_size = 1
+  eks_gpu_compute_node_group_desired_size = 1
 }

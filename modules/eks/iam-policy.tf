@@ -1,4 +1,4 @@
-# * This IAM Policy is translated from the official AWS ALB Ingress Controller documentation:
+# * This IAM Policy is simplified and translated from the official AWS ALB Ingress Controller documentation:
 #   https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.1/deploy/installation/
 data "aws_iam_policy_document" "main" {
   version = "2012-10-17"
@@ -21,6 +21,7 @@ data "aws_iam_policy_document" "main" {
       "elasticloadbalancing:DescribeLoadBalancers",
       "elasticloadbalancing:DescribeLoadBalancerAttributes",
       "elasticloadbalancing:DescribeListeners",
+      "elasticloadbalancing:DescribeListenerAttributes",
       "elasticloadbalancing:DescribeListenerCertificates",
       "elasticloadbalancing:DescribeSSLPolicies",
       "elasticloadbalancing:DescribeRules",
@@ -75,18 +76,6 @@ data "aws_iam_policy_document" "main" {
     effect    = "Allow"
     actions   = ["ec2:CreateTags"]
     resources = ["arn:aws:ec2:*:*:security-group/*"]
-
-    condition {
-      test     = "StringEquals"
-      variable = "ec2:CreateAction"
-      values   = ["CreateSecurityGroup"]
-    }
-
-    condition {
-      test     = "Null"
-      variable = "aws:RequestTag/elbv2.k8s.aws/cluster"
-      values   = ["false"]
-    }
   }
 
   statement {
@@ -96,18 +85,6 @@ data "aws_iam_policy_document" "main" {
       "ec2:DeleteTags",
     ]
     resources = ["arn:aws:ec2:*:*:security-group/*"]
-
-    condition {
-      test     = "Null"
-      variable = "aws:RequestTag/elbv2.k8s.aws/cluster"
-      values   = ["true"]
-    }
-
-    condition {
-      test     = "Null"
-      variable = "aws:ResourceTag/elbv2.k8s.aws/cluster"
-      values   = ["false"]
-    }
   }
 
   statement {
@@ -118,12 +95,6 @@ data "aws_iam_policy_document" "main" {
       "ec2:DeleteSecurityGroup",
     ]
     resources = ["*"]
-
-    condition {
-      test     = "Null"
-      variable = "aws:ResourceTag/elbv2.k8s.aws/cluster"
-      values   = ["false"]
-    }
   }
 
   statement {
@@ -133,12 +104,6 @@ data "aws_iam_policy_document" "main" {
       "elasticloadbalancing:CreateTargetGroup",
     ]
     resources = ["*"]
-
-    condition {
-      test     = "Null"
-      variable = "aws:RequestTag/elbv2.k8s.aws/cluster"
-      values   = ["false"]
-    }
   }
 
   statement {
@@ -148,33 +113,12 @@ data "aws_iam_policy_document" "main" {
       "elasticloadbalancing:DeleteListener",
       "elasticloadbalancing:CreateRule",
       "elasticloadbalancing:DeleteRule",
-    ]
-    resources = ["*"]
-  }
-
-  statement {
-    effect = "Allow"
-    actions = [
       "elasticloadbalancing:AddTags",
       "elasticloadbalancing:RemoveTags",
+      "elasticloadbalancing:RegisterTargets",
+      "elasticloadbalancing:DeregisterTargets",
     ]
-    resources = [
-      "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*",
-      "arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*",
-      "arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*",
-    ]
-
-    condition {
-      test     = "Null"
-      variable = "aws:RequestTag/elbv2.k8s.aws/cluster"
-      values   = ["true"]
-    }
-
-    condition {
-      test     = "Null"
-      variable = "aws:ResourceTag/elbv2.k8s.aws/cluster"
-      values   = ["false"]
-    }
+    resources = ["*"]
   }
 
   statement {
@@ -190,21 +134,6 @@ data "aws_iam_policy_document" "main" {
       "elasticloadbalancing:DeleteTargetGroup",
     ]
     resources = ["*"]
-
-    condition {
-      test     = "Null"
-      variable = "aws:ResourceTag/elbv2.k8s.aws/cluster"
-      values   = ["false"]
-    }
-  }
-
-  statement {
-    effect = "Allow"
-    actions = [
-      "elasticloadbalancing:RegisterTargets",
-      "elasticloadbalancing:DeregisterTargets",
-    ]
-    resources = ["arn:aws:elasticloadbalancing:*:*:targetgroup/*/*"]
   }
 
   statement {

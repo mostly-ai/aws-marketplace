@@ -1,4 +1,4 @@
-terraform { source = "../../../modules/s3-bucket" }
+terraform { source = "../../../modules/route53-alias-record" }
 
 locals {
   common        = read_terragrunt_config(find_in_parent_folders("common.hcl"))
@@ -12,7 +12,6 @@ inputs = {
   global_secret = local.global_secret
   hosted_zone   = local.global.hosted_zone
   record_name   = local.global.installation_domain_name
-
-  record_type  = "CNAME"
-  record_value = "albaddress.eu-central-1.elb.amazonaws.com"
+  record_type   = "A"
+  record_value  = get_env("AWS_ALB_DNS_NAME", "nonexistent")
 }
