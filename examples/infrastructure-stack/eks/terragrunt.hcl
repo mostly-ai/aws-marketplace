@@ -1,7 +1,7 @@
 terraform { source = "../../../modules/eks" }
 dependency "vpc" {
   config_path                             = "../vpc"
-  mock_outputs_allowed_terraform_commands = ["plan", "validate"]
+  mock_outputs_allowed_terraform_commands = ["plan", "validate", "destroy"]
   mock_outputs = {
     vpc_id             = "vpc-mockvpcid"
     private_subnet_ids = ["subnet-mocksubnetidprivate1", "subnet-mocksubnetidprivate2"]

@@ -1,13 +1,4 @@
 terraform { source = "../../../modules/helm" }
-dependency "s3-bucket" {
-  config_path                             = "../../infrastructure-stack/s3-bucket"
-  mock_outputs_allowed_terraform_commands = ["plan", "validate"]
-  mock_outputs = {
-    iam_access_key_id     = "mock-access-key-id"
-    iam_secret_access_key = "mock-secret-access-key"
-    bucket_name           = "mock-bucket-name"
-  }
-}
 
 locals {
   common = read_terragrunt_config(find_in_parent_folders("common.hcl"))
