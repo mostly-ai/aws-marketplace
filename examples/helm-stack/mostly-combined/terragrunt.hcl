@@ -52,6 +52,15 @@ inputs = {
       mostlyApp = {
         deployment = {
           awsProductCode = "7lynt012mo78turu5n6s8kbbc"
+        },
+        secrets = {
+          defaultSuperAdmin = {
+            create = true
+            value = {
+              username = base64encode("superadmin@${local.global.hosted_zone}")
+              password = base64encode("defaultPassword123")
+            }
+          }
         }
       },
       combinedChart = {

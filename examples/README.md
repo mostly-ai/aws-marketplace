@@ -36,6 +36,8 @@ Finally, it would be best if you have checked the [repository guide](../README.m
 
 Overall, the installation process is straightforward and relies on deploying the terragrunt stacks in the order described [above](#terragrunt-stacks). If using the examples directly, make sure to change the [common.hcl](./common.hcl) file with your own values, such as the FQDN and AWS Region.
 
+The credentials for the initial superadmin are defined in the [`helm-stack/mostly-combined/terragrunt.hcl`](./helm-stack/mostly-combined/terragrunt.hcl) file and by default are set to: `superadmin@YOURHOSTEDZONE` with a password of `defaultPassword123`. It is highly recommended to change these before proceeding with the installation.
+
 ```bash
 # ! The commands below are assumed to run from the root of the repository.
 # ! When running terragrunt commands, double-check the resulting infrastructure before applying the changes. Note that some examples mock the `plan` command to enable the from-scratch previews and as such - the `apply` command is the best one to preview the changes with.
@@ -82,3 +84,13 @@ terragrunt run-all --working-dir examples/post-helm-stack -- plan
 # 6.3. Run the apply to configure the FQDN to point to the MostlyAI Platform
 terragrunt run-all --working-dir examples/post-helm-stack -- apply
 ```
+
+## Post-Installation
+
+Once the installation is complete, you can access the Platform using the FQDN you configured. This is a great time to check that the installation was successful and that the MostlyAI Platform is up and running.
+
+First, you should run a smoke test to verify the installation. This will verify that all the components are working correctly, able to communicate, that the backend storage/database is configured correctly and, finally, that the compute jobs are able to schedule. For this, it's best to follow the guide on the [MostlyAI Platform Documentation](https://mostly.ai/docs/quick-start/model-creators) page.
+
+Once you have verified the installation, it's great to proceed with enabling MostlyAI assistant following the [assistant configuration guide](https://mostly.ai/docs/assistant/configuration).
+
+Finally, you can setup the MostlyAI Platform with different computes to support your workloads, by following the [compute configuration guide](https://mostly.ai/docs/administration/compute).
