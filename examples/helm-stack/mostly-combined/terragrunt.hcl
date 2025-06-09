@@ -69,9 +69,7 @@ inputs = {
       },
       mostlyJupyterhub = {
         persistentVolumeClaim = {
-          jupyterhub = {
-            enabled = false
-          }
+          enabled = false
         }
       },
     }
