@@ -1,12 +1,12 @@
 ---
-About: Terragrunt examples for MostlyAI Marketplace Installation
+About: Terragrunt examples for MOSTLY AI Marketplace Installation
 RepositoryOwner: mostlyai-devops
 DocumentationOwner: mostlyai-devops
 ---
 
 # Installation Example
 
-> This article goes over the installation process following the terragrunt units in current directory. If you are looking for a more general installation overview, please refer to the [repository guide](../README.md) at the root of the repository.
+> This article goes over the installation process following the Terragrunt units in current directory. If you are looking for a more general installation overview, please refer to the [repository guide](../README.md) at the root of the repository.
 
 - [Installation Example](#installation-example)
   - [Terragrunt Stacks](#terragrunt-stacks)
@@ -19,28 +19,28 @@ DocumentationOwner: mostlyai-devops
 Examples go through the installation in a modular way, where each collection of modules (_stack_) is responsible for a specific part of the infrastructure. We've defined the following stacks:
 
 1. [**Infrastructure Stack**](./infrastructure-stack). This is the very base of the AWS Setup, which goes over the creation of the VPC, subnets, EKS, S3 Bucket, ACM, etc.
-2. [**Helm Stack**](./helm-stack). Here we install the Helm Charts themselves - both the MostlyAI Platform and the AWS Load Balancer controller.
-3. [**Post-Helm Stack**](./post-helm-stack). In the final stack, we configure the FQDN to point to the MostlyAI Platform, using the ALB's DNS name.
+2. [**Helm Stack**](./helm-stack). Here we install the Helm Charts themselves - both the MOSTLY AI Data Intelligence Platform and the AWS Load Balancer controller.
+3. [**Post-Helm Stack**](./post-helm-stack). In the final stack, we configure the FQDN to point to the MOSTLY AI Data Intelligence Platform, using the ALB's DNS name.
 
 ## Prerequisites
 
 Before you begin, ensure you have the following prerequisites in place:
 
 1. **AWS Authentication** configured in your environment. Examples assume that you have the `AWS_ACCESS_KEY_ID`,  `AWS_SECRET_ACCESS_KEY` and `AWS_REGION` environment variables set.
-2. A **Hosted Zone** (Domain) is configured in your AWS account's Route53 and a **FQDN** is selected for your MostlyAI Platform installation.
+2. A **Hosted Zone** (Domain) is configured in your AWS account's Route53 and a **FQDN** is selected for your MOSTLY AI Data Intelligence Platform installation.
 3. Necessary [**Tools**](../README.md#tools) are installed in your local environment.
 
 Finally, it would be best if you have checked the [repository guide](../README.md) for a general overview of this installation and its requirements.
 
 ## Installation
 
-Overall, the installation process is straightforward and relies on deploying the terragrunt stacks in the order described [above](#terragrunt-stacks). If using the examples directly, make sure to change the [common.hcl](./common.hcl) file with your own values, such as the FQDN and AWS Region.
+Overall, the installation process is straightforward and relies on deploying the Terragrunt stacks in the order described [above](#terragrunt-stacks). If using the examples directly, make sure to change the [common.hcl](./common.hcl) file with your own values, such as the FQDN and AWS Region.
 
 The credentials for the initial superadmin are defined in the [`helm-stack/mostly-combined/terragrunt.hcl`](./helm-stack/mostly-combined/terragrunt.hcl) file and by default are set to: `superadmin@YOURHOSTEDZONE` with a password of `defaultPassword123`. It is highly recommended to change these before proceeding with the installation.
 
 ```bash
 # ! The commands below are assumed to run from the root of the repository.
-# ! When running terragrunt commands, double-check the resulting infrastructure before applying the changes. Note that some examples mock the `plan` command to enable the from-scratch previews and as such - the `apply` command is the best one to preview the changes with.
+# ! When running Terragrunt commands, double-check the resulting infrastructure before applying the changes. Note that some examples mock the `plan` command to enable the from-scratch previews and as such - the `apply` command is the best one to preview the changes with.
 
 # 1. Prepare environment
 export AWS_ACCESS_KEY_ID=your_access_key_id
@@ -70,10 +70,10 @@ aws eks update-kubeconfig --region $AWS_REGION --name mai-mplace-eks
 
 # 5. Install the Helm Stack
 # 5.1. Run the plan to preview the stack changes
-#      Since mostlyai is installed from the AWS Marketplace Helm Registry, you will need to provide the authentication to it. This is done in the example via AWS_ECR_AUTH_TOKEN environment variable.
+#      Since MOSTLY AI is installed from the AWS Marketplace Helm Registry, you will need to provide the authentication to it. This is done in the example via AWS_ECR_AUTH_TOKEN environment variable.
 export AWS_ECR_AUTH_TOKEN=$(aws ecr get-login-password --region $AWS_REGION)
 terragrunt run-all --queue-include-external --working-dir examples/helm-stack -- plan
-# 5.2. Run the apply to install the MostlyAI Platform and AWS Load Balancer controller
+# 5.2. Run the apply to install the MOSTLY AI Data Intelligence Platform and AWS Load Balancer controller
 terragrunt run-all --queue-include-external --working-dir examples/helm-stack -- apply
 
 # 6. Install the Post-Helm Stack.
@@ -81,7 +81,7 @@ terragrunt run-all --queue-include-external --working-dir examples/helm-stack --
 export AWS_ALB_DNS_NAME=$(kubectl get ingress -n mostlyai -o jsonpath='{.items[0].status.loadBalancer.ingress[0].hostname}')
 # 6.2. Run the plan to preview the stack changes
 terragrunt run-all --working-dir examples/post-helm-stack -- plan
-# 6.3. Run the apply to configure the FQDN to point to the MostlyAI Platform
+# 6.3. Run the apply to configure the FQDN to point to the MOSTLY AI Data Intelligence Platform
 terragrunt run-all --working-dir examples/post-helm-stack -- apply
 ```
 
