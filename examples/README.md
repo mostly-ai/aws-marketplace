@@ -42,46 +42,47 @@ The credentials for the initial superadmin are defined in the [`helm-stack/mostl
 # ! The commands below are assumed to run from the root of the repository.
 # ! When running Terragrunt commands, double-check the resulting infrastructure before applying the changes. Note that some examples mock the `plan` command to enable the from-scratch previews and as such - the `apply` command is the best one to preview the changes with.
 
+# 0. Drop into the devbox shell with the tools pre-installed
+#    If not using devbox, ensure the necessary tools are installed in your environment following the README.md in the root of the repository.
+devbox shell
+
 # 1. Prepare environment
 export AWS_ACCESS_KEY_ID=your_access_key_id
 export AWS_SECRET_ACCESS_KEY=your_secret_access_key
 export AWS_REGION=your_aws_region
 
-# 2. Drop into the devbox shell with the tools pre-installed
-devbox shell
-
-# 3. Install the Infrastructure Stack
+# 2. Install the Infrastructure Stack
 #    -- Remember that you can always do a per-unit installation by running the `terragrunt run -- plan/apply` commands directly in the unit's directory.
-# 3.1. Run the plan to preview the stack changes
+# 2.1. Run the plan to preview the stack changes
 #      Note that some changes will include the mock values, which will only be known during the apply stage.
 #      In the examples, the creation of the GPU Node Group is disabled because by default the AWS quota for g-type instances is 0, but you can change this behavior by setting `eks_gpu_compute_node_group_enabled` to `true` in the examples/infrastructure-stack/eks/terragrunt.hcl
 terragrunt run-all --working-dir examples/infrastructure-stack -- plan
-# 3.2. Run the apply to create the infrastructure
+# 2.2. Run the apply to create the infrastructure
 #      EKS Cluster and Node Groups creation usually takes around 15 minutes.
 terragrunt run-all --working-dir examples/infrastructure-stack -- apply
-# 3.3. While terragrunt will check for all resources successful creation status, we need to double-check that our ACM certificate has been issued. This can be done by either:
+# 2.3. While terragrunt will check for all resources successful creation status, we need to double-check that our ACM certificate has been issued. This can be done by either:
 #  - Checking the AWS Console (make sure to select the correct region):
 #       https://console.aws.amazon.com/acm/home?region=us-east-1#/certificates/list
 #   - Using the AWS CLI to check the certificate status
 aws acm describe-certificate --certificate-arn arn:aws:acm:::certificate/your-certificate-id
 
-# 4. Connect your kubectl to the created cluster using awscli. Cluster name is ${environment}-eks, where environment is defined in the common.hcl file.
+# 3. Connect your kubectl to the created cluster using awscli. Cluster name is ${environment}-eks, where environment is defined in the common.hcl file.
 aws eks update-kubeconfig --region $AWS_REGION --name mai-mplace-eks
 
-# 5. Install the Helm Stack
-# 5.1. Run the plan to preview the stack changes
+# 4. Install the Helm Stack
+# 4.1. Run the plan to preview the stack changes
 #      Since MOSTLY AI is installed from the AWS Marketplace Helm Registry, you will need to provide the authentication to it. This is done in the example via AWS_ECR_AUTH_TOKEN environment variable.
 export AWS_ECR_AUTH_TOKEN=$(aws ecr get-login-password --region $AWS_REGION)
 terragrunt run-all --queue-include-external --working-dir examples/helm-stack -- plan
-# 5.2. Run the apply to install the MOSTLY AI Data Intelligence Platform and AWS Load Balancer controller
+# 4.2. Run the apply to install the MOSTLY AI Data Intelligence Platform and AWS Load Balancer controller
 terragrunt run-all --queue-include-external --working-dir examples/helm-stack -- apply
 
-# 6. Install the Post-Helm Stack.
-# 6.1. Fetch the ALB DNS name from the Ingress resource's status field.
+# 5. Install the Post-Helm Stack.
+# 5.1. Fetch the ALB DNS name from the Ingress resource's status field.
 export AWS_ALB_DNS_NAME=$(kubectl get ingress -n mostlyai -o jsonpath='{.items[0].status.loadBalancer.ingress[0].hostname}')
-# 6.2. Run the plan to preview the stack changes
+# 5.2. Run the plan to preview the stack changes
 terragrunt run-all --working-dir examples/post-helm-stack -- plan
-# 6.3. Run the apply to configure the FQDN to point to the MOSTLY AI Data Intelligence Platform
+# 5.3. Run the apply to configure the FQDN to point to the MOSTLY AI Data Intelligence Platform
 terragrunt run-all --working-dir examples/post-helm-stack -- apply
 ```
 
