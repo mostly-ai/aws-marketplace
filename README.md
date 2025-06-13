@@ -1,16 +1,16 @@
 ---
-About: Installing MostlyAI AWS Marketplace Offering
+About: Installing MOSTLY AI AWS Marketplace Offering
 RepositoryOwner: mostlyai-devops
 DocumentationOwner: mostlyai-devops
 ---
 
-# MostlyAI Marketplace Installation Guide
+# MOSTLY AI Marketplace Installation Guide
 
 [![Website](https://img.shields.io/badge/Website-text?style=flat-square&color=f2f4ff)](https://mostly.ai/)
 [![Product Documentation](https://img.shields.io/badge/Product%20Documentation-text?style=flat-square&color=6fa8dc)](https://mostly.ai/docs)
 [![AWS Marketplace Offering](https://img.shields.io/badge/AWS%20Marketplace%20Offering-text?style=flat-square&color=ff9900)](https://aws.amazon.com/marketplace/pp/prodview-clqfgzfzznfoc)
 
-- [MostlyAI Marketplace Installation Guide](#mostlyai-marketplace-installation-guide)
+- [MOSTLY AI Marketplace Installation Guide](#mostlyai-marketplace-installation-guide)
   - [Tools](#tools)
   - [Basic Overview](#basic-overview)
   - [Installation Requirements](#installation-requirements)
@@ -29,7 +29,7 @@ DocumentationOwner: mostlyai-devops
 
 ## Basic Overview
 
-`aws-marketplace` is a repository aimed to provide guidance on preparing your infrastructure for the MostlyAI Marketplace installation. Here, you will find a collection of Terraform modules that can be used to bootstrap the needed AWS components - VPC, EKS, ACM, etc.
+`aws-marketplace` is a repository aimed to provide guidance on preparing your infrastructure for the MOSTLY AI Marketplace installation. Here, you will find a collection of Terraform modules that can be used to bootstrap the needed AWS components - VPC, EKS, ACM, etc.
 
 Some [modules](./modules) ([eks](./modules/eks), [vpc](./modules/vpc)) are referencing widely-used [community modules](https://registry.terraform.io/namespaces/terraform-aws-modules) for the sake of brevity and ongoing support.
 
@@ -39,10 +39,10 @@ The repository also comes with terragrunt [examples](./examples), demonstrating 
 
 ## Installation Requirements
 
-MostlyAI Platform requires the following infrastructure in place to be installed and operate correctly:
+The MOSTLY AI Data Intelligence Platform requires the following infrastructure in place to be installed and operate correctly:
 
 1. **Kubernetes Cluster** - the platform is distributed in a form of a helm-chart and only supports Kubernetes as a deployment target.
-2. **Fully-Qualified Domain Name (FQDN)** - FQDN is required when configuring the KeyCloak identity provider realm. It is also used in the ingress configuration.
+2. **Fully-Qualified Domain Name (FQDN)** - FQDN is required when configuring the Keycloak identity provider realm. It is also used in the ingress configuration.
 3. **TLS Certificate** - Secure Context is required for client -> platform communication starting KC26, hence the requirement for a TLS certificate.
 
 Additionally, the [examples](./examples) in this repository assume the use/deployment of the following:
@@ -50,7 +50,7 @@ Additionally, the [examples](./examples) in this repository assume the use/deplo
 1. **AWS Load Balancer Controller** - used to manage AWS Load Balancers for the Kubernetes cluster. _Deployed as a separate helm-chart release_
 2. **AWS Certificate Manager (ACM)** - used to manage TLS certificates which are automatically provisioned to ALBs. _Deployed as a separate helm-chart release_
 3. **AWS EBS CSI Controller** - used to manage AWS EBS volumes for the Kubernetes cluster. _Deployed as an EKS add-on_
-4. **AWS S3** - acts as a storage backend for the MostlyAI Platform. Alternatively, the `mostly-combined` chart provides an option to deploy a MinIO instance in the Kubernetes cluster.
+4. **AWS S3** - acts as a storage backend for the MOSTLY AI Data Intelligence Platform. Alternatively, the `mostly-combined` chart provides an option to deploy a MinIO instance in the Kubernetes cluster.
 5. **AWS Route53** - used to manage the FQDN dns record as well as the TLS certificate verification record.
 6. **AWS IAM Policies && IAM Instance Roles** - additional IAM Policies are deployed along with the EKS cluster example to allow AWS Controllers to operate. These policies are attached to the IAM Instance Roles. IRSA is not used for the sake of simplicity, but is recommended for production deployments.
 
