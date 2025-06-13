@@ -54,6 +54,8 @@ Additionally, the [examples](./examples) in this repository assume the use/deplo
 5. **AWS Route53** - used to manage the FQDN dns record as well as the TLS certificate verification record.
 6. **AWS IAM Policies && IAM Instance Roles** - additional IAM Policies are deployed along with the EKS cluster example to allow AWS Controllers to operate. These policies are attached to the IAM Instance Roles. IRSA is not used for the sake of simplicity, but is recommended for production deployments.
 
+If you don't have an EKS cluster that matches the minimum requirements mentioned above, please refer to [this documentation](https://mostly.ai/docs/install/deploy/aws-eks) for basic guidance on how to set it up.
+
 ## Getting Started
 
 This repository is setup with [`devbox`](https://www.jetify.com/devbox) which can be used to set up your environment. To get started, run the following command in the root of the repository, which will drop you into a shell with all the necessary tools installed:
@@ -61,6 +63,9 @@ This repository is setup with [`devbox`](https://www.jetify.com/devbox) which ca
 ```bash
 devbox shell
 ```
+
+- Remember to run `devbox init` after installation and before using it if you just installed it in your environment.
+  
 
 Otherwise, you can install the dependencies following the instructions in the **[Tools](#tools)** section above.
 
