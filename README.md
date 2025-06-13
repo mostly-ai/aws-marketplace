@@ -39,7 +39,7 @@ The repository also comes with terragrunt [examples](./examples), demonstrating 
 
 ## Installation Requirements
 
-The MOSTLY AI Data Intelligence Platform requires the following infrastructure in place to be installed and operate correctly:
+To install and run the MOSTLY AI Data Intelligence Platform, the following infrastructure components are required. This repository outlines these prerequisites and provides a step-by-step installation example using the **[tools](#tools)** listed above.
 
 1. **Kubernetes Cluster** - the platform is distributed in a form of a helm-chart and only supports Kubernetes as a deployment target.
 2. **Fully-Qualified Domain Name (FQDN)** - FQDN is required when configuring the Keycloak identity provider realm. It is also used in the ingress configuration.
@@ -62,7 +62,7 @@ This repository is setup with [`devbox`](https://www.jetify.com/devbox) which ca
 devbox shell
 ```
 
-Otherwise, you can install the dependencies following the instructions in the **[Tools](#tools)** section above.
+Alternatively, you can install the dependencies following the instructions in the **[Tools](#tools)** section above.
 
 You will also need to have your AWS credentials available in the environment. The examples read those directly from the environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`. It would also be most convenient to set the `AWS_REGION` variable to the region where you want to deploy the infrastructure for the awscli interactions.
 
