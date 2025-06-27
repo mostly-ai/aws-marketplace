@@ -1,6 +1,6 @@
 # * This IAM Policy is simplified and translated from the official AWS ALB Ingress Controller documentation:
 #   https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.1/deploy/installation/
-data "aws_iam_policy_document" "main" {
+data "aws_iam_policy_document" "loadbalancer" {
   version = "2012-10-17"
 
   statement {
@@ -150,11 +150,11 @@ data "aws_iam_policy_document" "main" {
 }
 
 
-resource "aws_iam_policy" "main" {
+resource "aws_iam_policy" "loadbalancer" {
   name        = "${var.global.environment}-${var.service}-alb-controller-policy"
   path        = "/"
   description = "Access Policy for ${var.global.environment}-${var.service} ALB controller"
-  policy      = data.aws_iam_policy_document.main.json
+  policy      = data.aws_iam_policy_document.loadbalancer.json
   tags = {
     "Environment" : var.global.environment
     "ManagedBy" : "Terraform"

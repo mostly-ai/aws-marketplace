@@ -56,7 +56,8 @@ module "eks" {
         iam_role_additional_policies = {
           AWSMarketplaceMeteringRegisterUsage = "arn:aws:iam::aws:policy/AWSMarketplaceMeteringRegisterUsage",
           AmazonEBSCSIDriverPolicy            = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
-          ALBControllerIAMPolicy              = aws_iam_policy.main.arn
+          ALBControllerIAMPolicy              = aws_iam_policy.loadbalancer.arn
+          MostlyServiceAuthPolicy             = aws_iam_policy.auth.arn
         }
         # * Note that after creation - desired size must be kept up-to-date manually
         # https://github.com/terraform-aws-modules/terraform-aws-eks/blob/master/docs/faq.md#why-are-there-no-changes-when-a-node-groups-desired_size-is-modified

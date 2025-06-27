@@ -50,9 +50,6 @@ inputs = {
         }
       },
       mostlyApp = {
-        deployment = {
-          awsProductCode = "7lynt012mo78turu5n6s8kbbc"
-        },
         secrets = {
           defaultSuperAdmin = {
             create = true
