@@ -54,6 +54,7 @@ Additionally, the [examples](./examples) in this repository assume the use/deplo
 5. **AWS Route53** - used to manage the FQDN dns record as well as the TLS certificate verification record.
 6. **AWS IAM Policies && IAM Instance Roles** - additional IAM Policies are deployed along with the EKS cluster example to allow AWS Controllers to operate. These policies are attached to the IAM Instance Roles. IRSA is not used for the sake of simplicity, but is recommended for production deployments.
 
+
 ## Getting Started
 
 This repository is setup with [`devbox`](https://www.jetify.com/devbox) which can be used to set up your environment. To get started, run the following command in the root of the repository, which will drop you into a shell with all the necessary tools installed:
@@ -75,3 +76,6 @@ export AWS_REGION=your_aws_region
 Finally, we assume that you have already purchased the Marketplace offering which will automatically provide you with the access to the helm chart and images stored in the AWS Marketplace ECR repository.
 
 With your environment set up, you can follow the instructions in the [examples](./examples) README to deploy the infrastructure or use the modules directly.
+
+
+**Note:** If you use the recommended approach of using `devbox` and an IAM user with Admin rights over your account, please note that your Organization may have [Service control policies](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html) in place that could restrict you from deploying the cluster and its [Installation Requirements](#installation-requirements). Please verify with your organization's Cloud team for such Policies and ask them to review the contents of this repository for validation and support.
