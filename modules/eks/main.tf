@@ -14,3 +14,5 @@ provider "aws" {
   token      = var.global_secret.aws_session_token
   region     = var.global.aws_region
 }
+
+data "aws_caller_identity" "current" {}
