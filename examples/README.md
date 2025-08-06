@@ -65,6 +65,9 @@ terragrunt run-all --working-dir examples/infrastructure-stack -- apply
 #       https://console.aws.amazon.com/acm/home?region=us-east-1#/certificates/list
 #   - Using the AWS CLI to check the certificate status
 aws acm describe-certificate --certificate-arn arn:aws:acm:::certificate/your-certificate-id
+# 2.4. Finally, make sure to enable the AWS License Manager in order for the installation to be able to self-issue the licenses.
+# This can be done on this page:
+# - https://us-east-1.console.aws.amazon.com/license-manager/home?region=us-east-1
 
 # 3. Connect your kubectl to the created cluster using awscli. Cluster name is ${environment}-eks, where environment is defined in the common.hcl file.
 aws eks update-kubeconfig --region $AWS_REGION --name mai-mplace-eks

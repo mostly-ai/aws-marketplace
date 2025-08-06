@@ -3,6 +3,7 @@ dependency "s3-bucket" {
   config_path                             = "../../infrastructure-stack/s3-bucket"
   mock_outputs_allowed_terraform_commands = ["plan", "validate"]
   mock_outputs = {
+    aws_account_id        = "mock-aws-account-id"
     iam_access_key_id     = "mock-access-key-id"
     iam_secret_access_key = "mock-secret-access-key"
     bucket_name           = "mock-bucket-name"
@@ -57,6 +58,11 @@ inputs = {
               username = base64encode("superadmin@${local.global.hosted_zone}")
               password = base64encode("defaultPassword123")
             }
+          }
+        },
+        serviceAccount = {
+          annotations = {
+            "eks.amazonaws.com/role-arn" = "arn:aws:iam::${dependency.s3-bucket.outputs.aws_account_id}:role/${local.global.environment}-eks-auth-role"
           }
         }
       },

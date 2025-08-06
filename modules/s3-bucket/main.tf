@@ -17,3 +17,5 @@ provider "aws" {
   secret_key = var.global_secret.aws_secret_key
   region     = var.global.aws_region
 }
+
+data "aws_caller_identity" "current" {}

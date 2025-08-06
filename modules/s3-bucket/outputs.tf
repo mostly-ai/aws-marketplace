@@ -11,3 +11,7 @@ output "iam_secret_access_key" {
 output "bucket_name" {
   value = aws_s3_bucket.main[keys(aws_s3_bucket.main)[0]].bucket
 }
+
+output "aws_account_id" {
+  value = data.aws_caller_identity.current.account_id
+}
