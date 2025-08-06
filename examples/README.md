@@ -34,7 +34,7 @@ Finally, it would be best if you have checked the [repository guide](../README.m
 
 ## Installation
 
-Overall, the installation process is straightforward and relies on deploying the Terragrunt stacks in the order described [above](#terragrunt-stacks). If using the examples directly, make sure to change the [common.hcl](./common.hcl) file with your own values, such as the FQDN and AWS Region.
+Overall, the installation process is straightforward and relies on deploying the Terragrunt stacks in the order described [above](#terragrunt-stacks). If using the examples directly, make sure to change the [common.hcl](./common.hcl) file with your own values: environment (you can create a global unique name for your organization), aws_region and hosted_zone.
 
 The credentials for the initial superadmin are defined in the [`helm-stack/mostly-combined/terragrunt.hcl`](./helm-stack/mostly-combined/terragrunt.hcl) file and by default are set to: `superadmin@YOURHOSTEDZONE` with a password of `defaultPassword123`. It is highly recommended to change these before proceeding with the installation.
 
