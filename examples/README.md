@@ -72,7 +72,7 @@ aws eks update-kubeconfig --region $AWS_REGION --name mai-mplace-eks
 # 4. Install the Helm Stack
 # 4.1. Run the plan to preview the stack changes
 #      Since MOSTLY AI is installed from the AWS Marketplace Helm Registry, you will need to provide the authentication to it. This is done in the example via AWS_ECR_AUTH_TOKEN environment variable.
-export AWS_ECR_AUTH_TOKEN=$(aws ecr get-login-password --region $AWS_REGION)
+export AWS_ECR_AUTH_TOKEN=$(aws ecr get-login-password --region us-east-1)
 terragrunt run-all --queue-include-external --working-dir examples/helm-stack -- plan
 # 4.2. Run the apply to install the MOSTLY AI Data Intelligence Platform and AWS Load Balancer controller
 terragrunt run-all --queue-include-external --working-dir examples/helm-stack -- apply
