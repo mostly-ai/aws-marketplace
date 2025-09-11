@@ -39,6 +39,7 @@ inputs = {
             "alb.ingress.kubernetes.io/load-balancer-attributes" = "idle_timeout.timeout_seconds=600"
             "alb.ingress.kubernetes.io/scheme"                   = "internet-facing"
             "alb.ingress.kubernetes.io/ssl-redirect"             = "443"
+            "alb.ingress.kubernetes.io/inbound-cidrs"            = join(", ", local.common.locals.allowed_access_cidrs)
           }
         }
       },
