@@ -29,7 +29,7 @@ Before you begin, ensure you have the following prerequisites in place:
 1. **AWS Authentication** configured in your environment. Examples assume that you have the `AWS_ACCESS_KEY_ID`,  `AWS_SECRET_ACCESS_KEY` and `AWS_REGION` environment variables set.
 2. A **Hosted Zone** (Domain) is configured in your AWS account's Route53 and a **FQDN** is selected for your MOSTLY AI Data Intelligence Platform installation. If this FQDN is part of a subdomain for which you created a separate hosted zone (e.g., mostlyai.mydomain.com under the parent domain mydomain.com), you must add an NS record in the parent domain’s hosted zone (mydomain.com) pointing to the name servers of the subdomain’s hosted zone. This ensures proper DNS resolution.
 3. Necessary [**Tools**](../README.md#tools) are installed in your local environment.
-4. The IP address range (in CIDR notation) that is allowed to access the platform. If no range is specified, the default 0.0.0.0/0 will be used, which exposes the installation to the public internet (if no other network restrictions are in place). It is strongly recommended to restrict access to trusted IP ranges only.
+4. The **IP address range** (in CIDR notation) that is allowed to access the platform. If no range is specified, the default 0.0.0.0/0 will be used, which exposes the installation to the public internet (if no other network restrictions are in place). It is strongly recommended to restrict access to trusted IP ranges only.
 
 Finally, it would be best if you have checked the [repository guide](../README.md) for a general overview of this installation and its requirements.
 
