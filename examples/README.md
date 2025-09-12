@@ -27,9 +27,9 @@ Examples go through the installation in a modular way, where each collection of 
 Before you begin, ensure you have the following prerequisites in place:
 
 1. **AWS Authentication** configured in your environment. Examples assume that you have the `AWS_ACCESS_KEY_ID`,  `AWS_SECRET_ACCESS_KEY` and `AWS_REGION` environment variables set.
-2. A **Hosted Zone** (Domain) is configured in your AWS account's Route53 and a **FQDN** is selected for your MOSTLY AI Data Intelligence Platform installation. If the FQDN is a subdomain of your main domain (e.g. `mostlyai.mydomain.com`), you should define an NS record with the name servers of this hosted zone in your main domain (e.g. `mydomain.com`), ensuring the name resolution chain. 
+2. A **Hosted Zone** (Domain) is configured in your AWS account's Route53 and a **FQDN** is selected for your MOSTLY AI Data Intelligence Platform installation. If this FQDN is part of a subdomain for which you created a separate hosted zone (e.g., mostlyai.mydomain.com under the parent domain mydomain.com), you must add an NS record in the parent domain’s hosted zone (mydomain.com) pointing to the name servers of the subdomain’s hosted zone. This ensures proper DNS resolution.
 3. Necessary [**Tools**](../README.md#tools) are installed in your local environment.
-4. The IP address range as a **CIDR** you want to allow to access the platform. If not provided, the default CIDR of `0.0.0.0/0` will be used, resulting a publicly accessible installation. 
+4. The IP address range (in CIDR notation) that is allowed to access the platform. If no range is specified, the default 0.0.0.0/0 will be used, which exposes the installation to the public internet (if no other network restrictions are in place). It is strongly recommended to restrict access to trusted IP ranges only.
 
 Finally, it would be best if you have checked the [repository guide](../README.md) for a general overview of this installation and its requirements.
 
@@ -102,10 +102,8 @@ Finally, you can setup the MostlyAI Platform with different computes to support 
 
 ## Frequently Asked Questions
 
-**Q**: Can I change the allowed IP range after the installation?
+### Question: Can I change the allowed IP range after the installation?
+Yes. You can update the Helm chart configuration and then re-apply the charts to apply the new IP range. 
 
-**A**: Yes, you will need to edit the helm charts and re-apply the charts for this. 
-
-**Q**: I will install the platform on an AWS account, where a local network and/or VPN is already configured. Can I use this VPC definition instead of creating a new VPC?
-
-**A**: Yes, it is possible to configure an existing VPC. For this, you will need to modify the terragrunt.hcl file and edit the entries `vpc_id`, `private_subnet_ids` and `public_subnet_ids` before the installation. 
+### Question: I want to install the platform on an AWS account where a local network and/or VPN is already configured. Can I use this VPC instead of creating a new one?
+Yes, you can configure the platform to use an existing VPC. To do this, update the `terragrunt.hcl` file with the appropriate values for `vpc_id`, `private_subnet_ids`, and `public_subnet_ids` before starting the installation.  

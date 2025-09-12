@@ -25,7 +25,7 @@ DocumentationOwner: mostlyai-devops
   - `kubectl`: Command-line tool for interacting with Kubernetes clusters. ([Source](https://github.com/kubernetes/kubectl), [Install](https://kubernetes.io/docs/tasks/tools/) & [Documentation](https://kubernetes.io/docs/reference/kubectl/))
   - `helm`: Package manager for Kubernetes ([Source](https://github.com/helm/helm), [Install](https://helm.sh/docs/intro/install/) & [Documentation](https://helm.sh/docs/))
 - **Recommended:**
-  - `devbox`: A tool to prepare your development environment for working with this repository. ([Source/Install](https://github.com/jetify-com/devbox) & [Documentation](https://www.jetify.com/docs/devbox/))
+  - `devbox`: A tool to prepare your development environment for working with this repository. It is installing the above required components automatically. ([Source/Install](https://github.com/jetify-com/devbox) & [Documentation](https://www.jetify.com/docs/devbox/))
 
 ## Basic Overview
 
