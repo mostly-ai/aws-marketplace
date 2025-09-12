@@ -27,8 +27,9 @@ Examples go through the installation in a modular way, where each collection of 
 Before you begin, ensure you have the following prerequisites in place:
 
 1. **AWS Authentication** configured in your environment. Examples assume that you have the `AWS_ACCESS_KEY_ID`,  `AWS_SECRET_ACCESS_KEY` and `AWS_REGION` environment variables set.
-2. A **Hosted Zone** (Domain) is configured in your AWS account's Route53 and a **FQDN** is selected for your MOSTLY AI Data Intelligence Platform installation.
+2. A **Hosted Zone** (Domain) is configured in your AWS account's Route53 and a **FQDN** is selected for your MOSTLY AI Data Intelligence Platform installation. If the FQDN is a subdomain of your main domain (e.g. `mostlyai.mydomain.com`), you should define an NS record with the name servers of this hosted zone in your main domain (e.g. `mydomain.com`), ensuring the name resolution chain. 
 3. Necessary [**Tools**](../README.md#tools) are installed in your local environment.
+4. The IP address range as a **CIDR** you want to allow to access the platform. If not provided, the default CIDR of `0.0.0.0/0` will be used, resulting a publicly accessible installation. 
 
 Finally, it would be best if you have checked the [repository guide](../README.md) for a general overview of this installation and its requirements.
 
@@ -98,3 +99,13 @@ First, you should run a smoke test to verify the installation. This will verify 
 Once you have verified the installation, it's great to proceed with enabling MostlyAI assistant following the [assistant configuration guide](https://mostly.ai/docs/assistant/configuration).
 
 Finally, you can setup the MostlyAI Platform with different computes to support your workloads, by following the [compute configuration guide](https://mostly.ai/docs/administration/compute).
+
+## Frequently Asked Questions
+
+**Q**: Can I change the allowed IP range after the installation?
+
+**A**: Yes, you will need to edit the helm charts and re-apply the charts for this. 
+
+**Q**: I will install the platform on an AWS account, where a local network and/or VPN is already configured. Can I use this VPC definition instead of creating a new VPC?
+
+**A**: Yes, it is possible to configure an existing VPC. For this, you will need to modify the terragrunt.hcl file and edit the entries `vpc_id`, `private_subnet_ids` and `public_subnet_ids` before the installation. 
