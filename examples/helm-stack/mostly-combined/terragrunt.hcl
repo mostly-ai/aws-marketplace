@@ -11,6 +11,7 @@ dependency "s3-bucket" {
 }
 
 locals {
+  extra  = read_terragrunt_config(find_in_parent_folders("extra-locals.hcl"))
   common = read_terragrunt_config(find_in_parent_folders("common.hcl"))
   global = local.common.locals
 }
@@ -39,7 +40,7 @@ inputs = {
             "alb.ingress.kubernetes.io/load-balancer-attributes" = "idle_timeout.timeout_seconds=600"
             "alb.ingress.kubernetes.io/scheme"                   = "internet-facing"
             "alb.ingress.kubernetes.io/ssl-redirect"             = "443"
-            "alb.ingress.kubernetes.io/inbound-cidrs"            = join(", ", local.common.locals.allowed_access_cidrs)
+            "alb.ingress.kubernetes.io/inbound-cidrs"            = join(", ", local.extra.locals.allowed_access_cidrs)
           }
         }
       },
