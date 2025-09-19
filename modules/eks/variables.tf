@@ -1,7 +1,7 @@
 # Global variables provisioned by Terragrunt
-variable "global" { type = map(string) }
+variable "global" { type = map(any) }
 variable "global_secret" {
-  type      = map(string)
+  type      = map(any)
   sensitive = true
 }
 
