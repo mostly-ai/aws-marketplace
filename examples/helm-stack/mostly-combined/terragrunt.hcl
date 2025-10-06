@@ -19,6 +19,7 @@ locals {
 inputs = {
   service                       = "mostlyai"
   namespace                     = "mostlyai"
+  helm_release_deploy_enabled   = false
   helm_release_chart            = "mostly-combined"
   helm_release_repository       = "oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/mostly-ai/platform"
   helm_release_timeout          = 300
