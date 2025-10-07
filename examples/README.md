@@ -84,8 +84,9 @@ terragrunt run-all --queue-include-external --working-dir examples/helm-stack --
 export VALUES_FILE_PATH=$(find examples/helm-stack/mostly-combined/values -type f -path "*values.yaml")
 # 4.4.  Get the latest version from https://github.com/mostly-ai/mostlyai/releases
 # 4.5. Replace the [version] with the one retrieved in the previous step and run the install of the MOSTLY AI Data Intelligence Platform
-helm upgrade --install mostly-ai oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/mostly-ai/platform/mostly-combined/[version] \
+helm upgrade --install mostly-ai oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/mostly-ai/platform/mostly-combined \
   --values $VALUES_FILE_PATH \
+  --version [version] \
   --namespace mostlyai
 
 # 5. Install the Post-Helm Stack.
