@@ -86,7 +86,7 @@ export VALUES_FILE_PATH=$(find examples/helm-stack/mostly-combined/ -type f -pat
 # 4.5. Replace the [version] with the one retrieved in the previous step and run the install of the MOSTLY AI Data Intelligence Platform
 helm upgrade --install mostly-ai oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/mostly-ai/platform/mostly-combined/[version] \
   --values $VALUES_FILE_PATH \
-  --namespace mostly-ai
+  --namespace mostlyai
 
 # 5. Install the Post-Helm Stack.
 # 5.1. Fetch the ALB DNS name from the Ingress resource's status field.
