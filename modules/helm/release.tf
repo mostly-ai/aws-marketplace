@@ -2,6 +2,7 @@ resource "helm_release" "main" {
   # This depends_on block ensures that the local_sensitive_file is created before the helm_release.
   # This way the values can be viewed even if the helm_release fails.
   # We do not use this values file directly as it would cause helm_release to destroy this resource instead of updating it.
+  count               = var.helm_release_deploy_enabled ? 1 : 0
   depends_on          = [local_sensitive_file.main]
   name                = var.service
   repository          = var.helm_release_repository

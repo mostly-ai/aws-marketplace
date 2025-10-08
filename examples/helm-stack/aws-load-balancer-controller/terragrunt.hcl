@@ -6,10 +6,11 @@ locals {
 }
 
 inputs = {
-  service                 = "aws-load-balancer-controller"
-  namespace               = "kube-system"
-  helm_release_chart      = "aws-load-balancer-controller"
-  helm_release_repository = "https://aws.github.io/eks-charts"
+  service                     = "aws-load-balancer-controller"
+  namespace                   = "kube-system"
+  helm_release_deploy_enabled = true
+  helm_release_chart          = "aws-load-balancer-controller"
+  helm_release_repository     = "https://aws.github.io/eks-charts"
   helm_release_values = {
     values = {
       clusterName       = local.global.environment
