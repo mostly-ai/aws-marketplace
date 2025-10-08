@@ -51,3 +51,8 @@ variable "helm_release_secret_values" {
   } }
   sensitive = true
 }
+
+variable "helm_release_deploy_enabled" {
+    type = bool
+    default = false
+}

@@ -35,7 +35,7 @@ Finally, it would be best if you have checked the [repository guide](../README.m
 
 ## Installation
 
-Overall, the installation process is straightforward and relies on deploying the Terragrunt stacks in the order described [above](#terragrunt-stacks). If using the examples directly, make sure to change the [common.hcl](./common.hcl) file with your own values: environment (you can create a global unique name for your organization), aws_region and hosted_zone. Also, change the [extra-locals.hcl](./extra-locals.hcl) file to define the allowed IP ranges as CIDR blocks in the format ["1.1.1.1/1","2.2.2.2/2","3.3.3.3/3"]. 
+Overall, the installation process is straightforward and relies on deploying the Terragrunt stacks in the order described [above](#terragrunt-stacks). If using the examples directly, make sure to change the [common.hcl](./common.hcl) file with your own values: environment (you can create a global unique name for your organization), aws_region and hosted_zone. Also, change the [extra-locals.hcl](./extra-locals.hcl) file to define the allowed IP ranges as CIDR blocks in the format ["1.1.1.1/1","2.2.2.2/2","3.3.3.3/3"].
 
 The credentials for the initial superadmin are defined in the [`helm-stack/mostly-combined/terragrunt.hcl`](./helm-stack/mostly-combined/terragrunt.hcl) file and by default are set to: `superadmin@YOURHOSTEDZONE` with a password of `defaultPassword123`. It is highly recommended to change these before proceeding with the installation.
 
@@ -78,8 +78,14 @@ aws eks update-kubeconfig --region $AWS_REGION --name mai-mplace-eks
 #      Since MOSTLY AI is installed from the AWS Marketplace Helm Registry, you will need to provide the authentication to it. This is done in the example via AWS_ECR_AUTH_TOKEN environment variable.
 export AWS_ECR_AUTH_TOKEN=$(aws ecr get-login-password --region us-east-1)
 terragrunt run-all --queue-include-external --working-dir examples/helm-stack -- plan
-# 4.2. Run the apply to install the MOSTLY AI Data Intelligence Platform and AWS Load Balancer controller
+# 4.2. Run the apply to generate the values.yaml file required for the helm installation
 terragrunt run-all --queue-include-external --working-dir examples/helm-stack -- apply
+# 4.3.  Get the latest version from https://aws.amazon.com/marketplace/pp/prodview-clqfgzfzznfoc
+# 4.4. Replace the [version] with the one retrieved in the previous step and run the install of the MOSTLY AI Data Intelligence Platform
+helm upgrade --install mostly-ai oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/mostly-ai/platform/mostly-combined \
+  --values examples/helm-stack/mostly-combined/values/values.yaml \
+  --version [version] \
+  --namespace mostlyai
 
 # 5. Install the Post-Helm Stack.
 # 5.1. Fetch the ALB DNS name from the Ingress resource's status field.
@@ -103,7 +109,7 @@ Finally, you can setup the MostlyAI Platform with different computes to support 
 ## Frequently Asked Questions
 
 ### Question: Can I change the allowed IP range after the installation?
-Yes. You can update the Helm chart configuration and then re-apply the charts to apply the new IP range. 
+Yes. You can update the Helm chart configuration and then re-apply the charts to apply the new IP range.
 
 ### Question: I want to install the platform on an AWS account where a local network and/or VPN is already configured. Can I use this VPC instead of creating a new one?
-Yes, you can configure the platform to use an existing VPC. To do this, update the [terragrunt.hcl](./infrastructure-stack/eks/terragrunt.hcl) file with the appropriate values for `vpc_id`, `private_subnet_ids`, and `public_subnet_ids` in the `inputs` section before starting the installation. You also need to make sure that you remove the VPC creation parts from the scripts. 
+Yes, you can configure the platform to use an existing VPC. To do this, update the [terragrunt.hcl](./infrastructure-stack/eks/terragrunt.hcl) file with the appropriate values for `vpc_id`, `private_subnet_ids`, and `public_subnet_ids` in the `inputs` section before starting the installation. You also need to make sure that you remove the VPC creation parts from the scripts.
