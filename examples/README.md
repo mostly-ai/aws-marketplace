@@ -81,7 +81,9 @@ terragrunt run-all --queue-include-external --working-dir examples/helm-stack --
 # 4.2. Run the apply to generate the values.yaml file required for the helm installation
 terragrunt run-all --queue-include-external --working-dir examples/helm-stack -- apply
 # 4.3.  Get the latest version from https://aws.amazon.com/marketplace/pp/prodview-clqfgzfzznfoc
-# 4.4. Replace the [version] with the one retrieved in the previous step and run the install of the MOSTLY AI Data Intelligence Platform
+# 4.4.  Authenticate to the registry
+aws ecr get-login-password --region us-east-1 | helm registry login --username AWS --password-stdin oci://709825985650.dkr.ecr.us-east-1.amazonaws.com
+# 4.5. Replace the [version] with the one retrieved in the previous step and run the install of the MOSTLY AI Data Intelligence Platform
 helm upgrade --install mostly-ai oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/mostly-ai/platform/mostly-combined \
   --values examples/helm-stack/mostly-combined/values/values.yaml \
   --version [version] \
